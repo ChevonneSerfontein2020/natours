@@ -4,6 +4,30 @@ const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
 
+exports.checkBody = (req, res, next) => {
+  if (!req.body.name || !req.body.price) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Missing name or price'
+    });
+  }
+
+  next();
+};
+
+exports.checkId = (req, res, next, val) => {
+  console.log(`Tour id is: ${val}`);
+
+  if (req.params.id * 1 > tours.length) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID'
+    });
+  }
+  
+  next();
+};
+
 // GET request to fetch all tours
 exports. getAllTours = (req, res) => {
   console.log(req.requestTime);
@@ -22,13 +46,6 @@ exports. getAllTours = (req, res) => {
 exports. getTour = (req, res) => {
   const id = req.params.id * 1; // convert string to number
   const tour = tours.find(el => el.id === id);
-
-  if (id > tours.length || id < 1 || !tour) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID'
-    });
-  }
 
   res.status(200).json({
     status: 'success',
@@ -84,26 +101,8 @@ exports. updateTour = (req, res) => {
 
 // DELETE request to delete a tour by ID
 exports.deleteTour = (req, res) => {
-  const id = req.params.id * 1;
-  const tourIndex = tours.findIndex(el => el.id === id);
-
-  if (tourIndex === -1) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID'
-    });
-  }
-
-  tours.splice(tourIndex, 1);
-
-  fs.writeFile(
-    `${__dirname}/dev-data/data/tours-simple.json`,
-    JSON.stringify(tours),
-    err => {
-      res.status(204).json({
-        status: 'success',
-        data: null
-      });
-    }
-  );
+  res.status(204).json({
+    status: 'success',
+    data: null
+  });
 };
