@@ -3,7 +3,7 @@ const tourController = require('../controllers/tourController');
 
 const router = express.Router(); // mounting tourRouter on app
 
-// router.param('id', tourController.checkId); // Middleware to check ID before processing requests
+router.route('/top-5-cheap').get(tourController.aliasTopTours, tourController.getAllTours);
 
 router
   .route('/')
