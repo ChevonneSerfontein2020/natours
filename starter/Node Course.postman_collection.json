@@ -56,6 +56,30 @@
 					"response": []
 				},
 				{
+					"name": "Top 5 Tours",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:3000/api/v1/tours/top-5-cheap",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"tours",
+								"top-5-cheap"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get Tour By Id",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
